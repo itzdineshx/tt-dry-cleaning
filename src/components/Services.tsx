@@ -1,5 +1,12 @@
 import { Shirt, Sparkles, Wind, Home, Scissors, Flame } from "lucide-react";
 
+import laundryImg from "../assets/laundry.jpg";
+import dryCleanImg from "../assets/dry-cleaning.png";
+import homeBulkImg from "../assets/home-bulk.jpg";
+import extraImg from "../assets/extra-services.jpg";
+import ironingImg from "../assets/ironing.jpg";
+import expressImg from "../assets/express.jpg";
+
 const Services = () => {
   const serviceCategories = [
     {
@@ -8,6 +15,7 @@ const Services = () => {
       description: "Complete wash and care for everyday clothing",
       services: ["KG Wash", "Wash & Iron", "Steam Ironing", "Student Washing"],
       color: "bg-primary/10 text-primary",
+      image: laundryImg,
     },
     {
       icon: Sparkles,
@@ -15,6 +23,7 @@ const Services = () => {
       description: "Professional care for delicate fabrics",
       services: ["Sarees", "Suits & Blazers", "Silk Clothes", "Children Clothes"],
       color: "bg-accent/10 text-accent",
+      image: dryCleanImg,
     },
     {
       icon: Home,
@@ -22,6 +31,7 @@ const Services = () => {
       description: "Large items cleaned with precision",
       services: ["Bed Sheets", "Blankets", "Carpets", "Sofa Covers"],
       color: "bg-primary/10 text-primary",
+      image: homeBulkImg,
     },
     {
       icon: Scissors,
@@ -29,6 +39,7 @@ const Services = () => {
       description: "Special treatments for tough jobs",
       services: ["Stain Removal", "Bleaching", "Darning", "Fabric Repair"],
       color: "bg-accent/10 text-accent",
+      image: extraImg,
     },
     {
       icon: Wind,
@@ -36,6 +47,7 @@ const Services = () => {
       description: "Crisp finish for all your clothes",
       services: ["EB Ironing", "Gas Ironing", "Coal Ironing", "Steam Press"],
       color: "bg-primary/10 text-primary",
+      image: ironingImg,
     },
     {
       icon: Flame,
@@ -43,10 +55,12 @@ const Services = () => {
       description: "When you need it fast",
       services: ["Same Day Delivery", "Rush Orders", "Priority Cleaning", "Quick Press"],
       color: "bg-accent/10 text-accent",
+      image: expressImg,
     },
   ];
 
   return (
+
     <section id="services" className="section-padding bg-background">
       <div className="container-custom">
         {/* Section Header */}
@@ -69,8 +83,17 @@ const Services = () => {
               key={index}
               className="bg-card rounded-2xl p-6 md:p-8 shadow-card card-hover border border-border/50"
             >
+              {/* ✅ Image */}
+              <img
+                src={category.image}
+                alt={category.title}
+                className="w-full h-44 object-cover rounded-xl mb-6"
+              />
+
               {/* Icon */}
-              <div className={`w-14 h-14 rounded-xl ${category.color} flex items-center justify-center mb-6`}>
+              <div
+                className={`w-14 h-14 rounded-xl ${category.color} flex items-center justify-center mb-6`}
+              >
                 <category.icon className="w-7 h-7" />
               </div>
 

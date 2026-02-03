@@ -1,5 +1,6 @@
 import { Phone, MessageCircle, MapPin, Clock, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   const phoneNumber = "9841871508";
@@ -12,78 +13,109 @@ const Hero = () => {
   ];
 
   return (
-    <section className="relative min-h-screen flex items-center hero-gradient overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-white rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-48 h-48 bg-white rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white rounded-full blur-3xl opacity-50" />
-      </div>
+    <section className="relative min-h-screen hero-gradient overflow-hidden">
 
-      <div className="container-custom relative z-10 pt-24 pb-16 md:pt-32 md:pb-24">
-        <div className="max-w-3xl">
-          {/* Location Badge */}
-          <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium mb-6 animate-fade-in">
-            <MapPin className="w-4 h-4" />
-            Near SRM Ramapuram, Porur, Chennai
-          </div>
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/40" />
 
-          {/* Main Headline */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight mb-6 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            Professional Laundry & Dry Cleaning
-            <span className="block mt-2 text-white/90">You Can Trust</span>
-          </h1>
+      <div className="relative container mx-auto px-6 py-20">
+        <div className="grid lg:grid-cols-2 gap-14 items-center">
 
-          {/* Subheadline */}
-          <p className="text-lg md:text-xl text-white/85 mb-8 max-w-2xl animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            Quality laundry services for SRM students and Porur residents. 
-            Fast turnaround, affordable prices, and doorstep pickup & delivery.
-          </p>
+          {/* LEFT CONTENT – fade + slide */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="max-w-xl text-white space-y-6"
+          >
 
-          {/* Trust Badges */}
-          <div className="flex flex-wrap gap-3 mb-10 animate-fade-in" style={{ animationDelay: "0.3s" }}>
-            {trustBadges.map((badge, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-2 bg-white/15 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium"
-              >
-                <CheckCircle className="w-4 h-4 text-white" />
-                {badge}
-              </div>
-            ))}
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 animate-fade-in" style={{ animationDelay: "0.4s" }}>
-            <Button variant="hero" size="lg" asChild>
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                <MessageCircle className="w-5 h-5" />
-                WhatsApp Us Now
-              </a>
-            </Button>
-            <Button variant="heroOutline" size="lg" asChild>
-              <a href={`tel:+91${phoneNumber}`}>
-                <Phone className="w-5 h-5" />
-                Call: {phoneNumber}
-              </a>
-            </Button>
-          </div>
-
-          {/* Quick Info */}
-          <div className="flex items-center gap-6 mt-10 text-white/80 text-sm animate-fade-in" style={{ animationDelay: "0.5s" }}>
-            <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4" />
-              <span>Open 8 AM - 9 PM</span>
-            </div>
-            <div className="flex items-center gap-2">
+            {/* Location Badge */}
+            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium mt-4">
               <MapPin className="w-4 h-4" />
-              <span>3-5 km Service Area</span>
+              Near SRM Ramapuram, Porur, Chennai
             </div>
-          </div>
+
+            {/* Heading */}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+              <span className="block">Professional</span>
+              <span className="block">
+                <span className="text-white">Laundry &</span>
+                <span className="ml-2 text-sky-400">Dry Cleaning</span>
+              </span>
+              <span className="block text-white/90 mt-1">
+                You Can Trust
+              </span>
+            </h1>
+
+            <p className="text-white/85 text-base max-w-lg">
+              Quality laundry services for SRM students and Porur residents.
+              Fast turnaround, affordable prices.
+            </p>
+
+            {/* Trust Badges */}
+            <div className="flex flex-wrap gap-3">
+              {trustBadges.map((badge, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 + index * 0.1 }}
+                  className="flex items-center gap-2 bg-white/15 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium"
+                >
+                  <CheckCircle className="w-3 h-3" />
+                  {badge}
+                </motion.div>
+              ))}
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <Button variant="hero" size="lg" asChild>
+                <a href={whatsappLink} target="_blank">
+                  <MessageCircle className="w-5 h-5" />
+                  WhatsApp Us
+                </a>
+              </Button>
+
+              <Button variant="heroOutline" size="lg" asChild>
+                <a href={`tel:+91${phoneNumber}`}>
+                  <Phone className="w-5 h-5" />
+                  Call: {phoneNumber}
+                </a>
+              </Button>
+            </div>
+
+            {/* Quick Info */}
+            <div className="flex gap-6 pt-6 text-sm text-white/80">
+              <div className="flex items-center gap-2">
+                <Clock className="w-4 h-4" />
+                Open 8 AM - 9 PM
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4" />
+                3–5 km Service Area
+              </div>
+            </div>
+          </motion.div>
+
+          {/* RIGHT IMAGE – fade + scale ONCE */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            className="hidden lg:flex justify-end items-center"
+          >
+            <img
+              src="/hero.png"
+              alt="Dry Cleaning"
+              className="w-[380px] h-auto"
+            />
+          </motion.div>
+
         </div>
       </div>
 
-      {/* Decorative Elements */}
+      {/* Bottom Fade */}
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
     </section>
   );

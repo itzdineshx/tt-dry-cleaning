@@ -20,12 +20,16 @@ const Header = () => {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <a href="#" className="flex items-center gap-2">
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full hero-gradient flex items-center justify-center">
-              <span className="text-white font-display font-bold text-lg md:text-xl">TT</span>
+            <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+              <img
+              src="/public/logo.png"
+              alt="TT Dry Cleaning"
+              className="w-full h-full object-contain scale-110"/>
+
             </div>
             <div className="hidden sm:block">
               <h1 className="font-display font-bold text-foreground text-lg leading-tight">TT Dry Cleaning</h1>
-              <p className="text-xs text-muted-foreground">Near SRM Ramapuram</p>
+              <p className="text-xs text-muted-foreground">Laundry | Dry Cleaning | Ironing</p>
             </div>
           </a>
 
