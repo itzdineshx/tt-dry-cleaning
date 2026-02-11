@@ -16,7 +16,7 @@ const Contact = () => {
   const whatsappLink = `https://wa.me/91${phoneNumber}`;
 
   return (
-    <section className="bg-slate-50 py-20 overflow-hidden">
+    <section id="contact" className="bg-slate-50 py-20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start">
 
         {/* LEFT CONTENT */}

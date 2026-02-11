@@ -56,7 +56,7 @@ const itemVariants = {
 /* ===================== COMPONENT ===================== */
 const PickupDelivery: React.FC = () => {
   return (
-    <section className="bg-slate-50 py-20">
+    <section id="pickup" className="bg-slate-50 py-20">
       <div className="max-w-7xl mx-auto px-6">
 
         {/* ===================== HEADING ===================== */}
