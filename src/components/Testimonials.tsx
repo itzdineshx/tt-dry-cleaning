@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const testimonials = [
   {
     name: "Arun Kumar",
     role: "Happy Customer",
-    image: "/user1.jpg",
     rating: 5,
     review:
       "Fast, reliable, and professional service. My clothes always come back clean and fresh.",
@@ -13,7 +13,6 @@ const testimonials = [
   {
     name: "Sneha R",
     role: "College Student",
-    image: "/user2.jpg",
     rating: 5,
     review:
       "Pickup and delivery are super convenient. I never worry about laundry anymore.",
@@ -21,7 +20,6 @@ const testimonials = [
   {
     name: "Vijay S",
     role: "Working Professional",
-    image: "/user3.jpg",
     rating: 4,
     review:
       "Great quality and timely delivery. Clothes are neatly folded and handled with care.",
@@ -78,11 +76,12 @@ const Testimonials = () => {
 
             {/* User */}
             <div className="flex items-center gap-4">
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-12 h-12 rounded-full object-cover"
-              />
+              <Avatar className="w-12 h-12">
+                <AvatarImage src="" alt={item.name} />
+                <AvatarFallback>
+                  {item.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
               <div>
                 <h4 className="font-semibold text-slate-900">
                   {item.name}
