@@ -1,9 +1,18 @@
+/* ================================
+   Google Fonts (ALWAYS FIRST)
+================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap');
+
+/* ================================
+   Tailwind Directives
+================================ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap');
-
+/* ================================
+   Base Layer (Theme + Globals)
+================================ */
 @layer base {
   :root {
     --background: 210 20% 98%;
@@ -45,14 +54,17 @@
     --service-card: 0 0% 100%;
     --hero-gradient-start: 210 85% 45%;
     --hero-gradient-end: 200 75% 55%;
-    
+
     /* Shadows */
     --shadow-sm: 0 1px 3px 0 hsl(215 25% 15% / 0.08);
     --shadow-md: 0 4px 12px -2px hsl(215 25% 15% / 0.1);
     --shadow-lg: 0 12px 32px -8px hsl(215 25% 15% / 0.15);
-    --shadow-card: 0 2px 8px -2px hsl(215 25% 15% / 0.08), 0 4px 16px -4px hsl(215 25% 15% / 0.06);
+    --shadow-card: 
+      0 2px 8px -2px hsl(215 25% 15% / 0.08),
+      0 4px 16px -4px hsl(215 25% 15% / 0.06);
   }
 
+  /* Dark mode */
   .dark {
     --background: 215 25% 10%;
     --foreground: 210 20% 98%;
@@ -72,9 +84,8 @@
     --input: 215 25% 20%;
     --ring: 210 80% 55%;
   }
-}
 
-@layer base {
+  /* Global resets */
   * {
     @apply border-border;
   }
@@ -93,23 +104,33 @@
     @apply font-bold tracking-tight;
   }
 
-  /* Utility to force Poppins (use for buttons, highlights, small headings) */
   .font-display {
     font-family: 'Poppins', 'Inter', system-ui, sans-serif;
     font-weight: 600;
   }
 }
 
+/* ================================
+   Components Layer
+================================ */
 @layer components {
   .hero-gradient {
-    background: linear-gradient(135deg, hsl(var(--hero-gradient-start)) 0%, hsl(var(--hero-gradient-end)) 100%);
+    background: linear-gradient(
+      135deg,
+      hsl(var(--hero-gradient-start)) 0%,
+      hsl(var(--hero-gradient-end)) 100%
+    );
   }
 
   .text-gradient {
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--hero-gradient-end)) 100%);
+    background: linear-gradient(
+      135deg,
+      hsl(var(--primary)) 0%,
+      hsl(var(--hero-gradient-end)) 100%
+    );
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .card-hover {
@@ -122,11 +143,16 @@
   }
 
   .btn-whatsapp {
-    @apply bg-[hsl(var(--whatsapp))] hover:bg-[hsl(var(--whatsapp-hover))] text-white font-semibold transition-all duration-200;
+    @apply bg-[hsl(var(--whatsapp))]
+           hover:bg-[hsl(var(--whatsapp-hover))]
+           text-white font-semibold
+           transition-all duration-200;
   }
 
   .btn-phone {
-    @apply bg-primary hover:bg-primary/90 text-primary-foreground font-semibold transition-all duration-200;
+    @apply bg-primary hover:bg-primary/90
+           text-primary-foreground font-semibold
+           transition-all duration-200;
   }
 
   .section-padding {
@@ -138,6 +164,9 @@
   }
 }
 
+/* ================================
+   Utilities Layer
+================================ */
 @layer utilities {
   .animate-float {
     animation: float 3s ease-in-out infinite;

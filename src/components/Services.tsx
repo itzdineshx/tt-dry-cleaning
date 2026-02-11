@@ -1,125 +1,134 @@
-import { Shirt, Sparkles, Wind, Home, Scissors, Flame } from "lucide-react";
+import { Shirt, Sparkles, Wind, Scissors } from "lucide-react";
+import { motion } from "framer-motion";
+import type { FC } from "react";
 
 import laundryImg from "../assets/laundry.jpg";
 import dryCleanImg from "../assets/dry-cleaning.png";
-import homeBulkImg from "../assets/home-bulk.jpg";
-import extraImg from "../assets/extra-services.jpg";
 import ironingImg from "../assets/ironing.jpg";
-import expressImg from "../assets/express.jpg";
+import stainImg from "../assets/express.jpg";
 
-const Services = () => {
-  const serviceCategories = [
+/* 🔹 Types */
+interface ServiceItem {
+  title: string;
+  image: string;
+  icon: FC<{ className?: string }>;
+}
+
+/* 🔹 Animation Variants */
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: {
+    opacity: 0,
+    y: 40,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
+
+const Services: FC = () => {
+  const services: ServiceItem[] = [
     {
-      icon: Shirt,
-      title: "Laundry Services",
-      description: "Complete wash and care for everyday clothing",
-      services: ["KG Wash", "Wash & Iron", "Steam Ironing", "Student Washing"],
-      color: "bg-primary/10 text-primary",
+      title: "Laundry Express",
       image: laundryImg,
+      icon: Shirt,
     },
     {
-      icon: Sparkles,
       title: "Dry Cleaning",
-      description: "Professional care for delicate fabrics",
-      services: ["Sarees", "Suits & Blazers", "Silk Clothes", "Children Clothes"],
-      color: "bg-accent/10 text-accent",
       image: dryCleanImg,
+      icon: Sparkles,
     },
     {
-      icon: Home,
-      title: "Home & Bulk Cleaning",
-      description: "Large items cleaned with precision",
-      services: ["Bed Sheets", "Blankets", "Carpets", "Sofa Covers"],
-      color: "bg-primary/10 text-primary",
-      image: homeBulkImg,
-    },
-    {
-      icon: Scissors,
-      title: "Extra Services",
-      description: "Special treatments for tough jobs",
-      services: ["Stain Removal", "Bleaching", "Darning", "Fabric Repair"],
-      color: "bg-accent/10 text-accent",
-      image: extraImg,
-    },
-    {
-      icon: Wind,
-      title: "Ironing Services",
-      description: "Crisp finish for all your clothes",
-      services: ["EB Ironing", "Gas Ironing", "Coal Ironing", "Steam Press"],
-      color: "bg-primary/10 text-primary",
+      title: "Ironing Service",
       image: ironingImg,
+      icon: Wind,
     },
     {
-      icon: Flame,
-      title: "Express Service",
-      description: "When you need it fast",
-      services: ["Same Day Delivery", "Rush Orders", "Priority Cleaning", "Quick Press"],
-      color: "bg-accent/10 text-accent",
-      image: expressImg,
+      title: "Stain Cleaning",
+      image: stainImg,
+      icon: Scissors,
     },
   ];
 
   return (
+    <section id="services" className="py-20 bg-background">
+      <div className="container mx-auto px-4">
 
-    <section id="services" className="section-padding bg-background">
-      <div className="container-custom">
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="inline-block text-primary font-semibold text-sm uppercase tracking-wider mb-4">
-            Our Services
-          </span>
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
-            Complete Laundry Solutions
+        {/* 🔹 Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center max-w-3xl mx-auto mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <span className="text-sky-500">Services</span>{" "}
+            <span className="text-foreground">
+              Designed For Your Convenience
+            </span>
           </h2>
+
           <p className="text-muted-foreground text-lg">
-            From everyday clothes to delicate fabrics, we handle everything with care and professionalism.
+            Enjoy a smoother, smarter laundry experience with services thoughtfully
+            designed around your comfort and schedule.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {serviceCategories.map((category, index) => (
-            <div
-              key={index}
-              className="bg-card rounded-2xl p-6 md:p-8 shadow-card card-hover border border-border/50"
-            >
-              {/* ✅ Image */}
-              <img
-                src={category.image}
-                alt={category.title}
-                className="w-full h-44 object-cover rounded-xl mb-6"
-              />
+        {/* 🔹 Services Cards */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+        >
+          {services.map((service, index) => {
+            const Icon = service.icon;
 
-              {/* Icon */}
-              <div
-                className={`w-14 h-14 rounded-xl ${category.color} flex items-center justify-center mb-6`}
+            return (
+              <motion.div
+                key={index}
+                variants={cardVariants}
+                whileHover={{ y: -8 }}
+                className="rounded-3xl overflow-hidden shadow-lg bg-card"
               >
-                <category.icon className="w-7 h-7" />
-              </div>
+                {/* 🔹 Image */}
+                <div className="relative">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-64 object-cover"
+                  />
 
-              {/* Content */}
-              <h3 className="text-xl font-display font-bold text-foreground mb-2">
-                {category.title}
-              </h3>
-              <p className="text-muted-foreground mb-6">
-                {category.description}
-              </p>
+                  {/* 🔹 Floating Label */}
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white rounded-xl px-5 py-3 flex items-center gap-3 shadow-xl">
+                    <div className="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center">
+                      <Icon className="w-5 h-5 text-white" />
+                    </div>
+                    <span className="font-semibold text-gray-900">
+                      {service.title}
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
 
-              {/* Service List */}
-              <ul className="space-y-2">
-                {category.services.map((service, serviceIndex) => (
-                  <li
-                    key={serviceIndex}
-                    className="flex items-center gap-2 text-foreground/80"
-                  >
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    {service}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );

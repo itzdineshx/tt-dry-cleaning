@@ -1,8 +1,27 @@
-import { Phone, MessageCircle, MapPin, Clock, CheckCircle } from "lucide-react";
+import {
+  Phone,
+  MessageCircle,
+  MapPin,
+  Clock,
+  CheckCircle,
+  Zap,
+  Shirt,
+  Sparkles,
+  ShoppingBag,
+  Package
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
-const Hero = () => {
+const services = [
+  { icon: Zap, label: "Steam Ironing" },
+  { icon: Shirt, label: "Wash & Iron" },
+  { icon: Sparkles, label: "Ultra Cleaning" },
+  { icon: ShoppingBag, label: "Bag Cleaning" },
+  { icon: Package, label: "Wash & Fold" },
+];
+
+const Hero: React.FC = () => {
   const phoneNumber = "9841871508";
   const whatsappLink = `https://wa.me/91${phoneNumber}?text=Hi, I'm interested in your laundry services`;
 
@@ -18,19 +37,19 @@ const Hero = () => {
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/40" />
 
-      <div className="relative container mx-auto px-6 py-20">
+      {/* ================= HERO CONTENT ================= */}
+      <div className="relative container mx-auto px-6 pt-24 pb-20">
         <div className="grid lg:grid-cols-2 gap-14 items-center">
 
-          {/* LEFT CONTENT – fade + slide */}
+          {/* LEFT CONTENT */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
             className="max-w-xl text-white space-y-6"
           >
-
-            {/* Location Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium mt-4">
+            {/* Location */}
+            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium">
               <MapPin className="w-4 h-4" />
               Near SRM Ramapuram, Porur, Chennai
             </div>
@@ -39,7 +58,7 @@ const Hero = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
               <span className="block">Professional</span>
               <span className="block">
-                <span className="text-white">Laundry &</span>
+                <span>Laundry &</span>
                 <span className="ml-2 text-sky-400">Dry Cleaning</span>
               </span>
               <span className="block text-white/90 mt-1">
@@ -47,12 +66,12 @@ const Hero = () => {
               </span>
             </h1>
 
-            <p className="text-white/85 text-base max-w-lg">
+            <p className="text-white/85 max-w-lg">
               Quality laundry services for SRM students and Porur residents.
               Fast turnaround, affordable prices.
             </p>
 
-            {/* Trust Badges */}
+            {/* Trust badges */}
             <div className="flex flex-wrap gap-3">
               {trustBadges.map((badge, index) => (
                 <motion.div
@@ -68,7 +87,7 @@ const Hero = () => {
               ))}
             </div>
 
-            {/* CTA Buttons */}
+            {/* CTA */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Button variant="hero" size="lg" asChild>
                 <a href={whatsappLink} target="_blank">
@@ -85,11 +104,11 @@ const Hero = () => {
               </Button>
             </div>
 
-            {/* Quick Info */}
+            {/* Quick info */}
             <div className="flex gap-6 pt-6 text-sm text-white/80">
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4" />
-                Open 8 AM - 9 PM
+                Open 8 AM – 9 PM
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4" />
@@ -98,25 +117,54 @@ const Hero = () => {
             </div>
           </motion.div>
 
-          {/* RIGHT IMAGE – fade + scale ONCE */}
+          {/* RIGHT IMAGE */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="hidden lg:flex justify-end items-center"
+            className="hidden lg:flex justify-end"
           >
             <img
               src="/hero.png"
-              alt="Dry Cleaning"
+              alt="Laundry Service"
               className="w-[380px] h-auto"
             />
           </motion.div>
-
         </div>
       </div>
 
-      {/* Bottom Fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
+      {/* ================= MOVING NEWS-STYLE STRIP ================= */}
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden">
+        <motion.div
+          className="flex w-max gap-16 items-center py-4"
+          animate={{ x: ["0px", "-50%"] }}
+          transition={{
+            duration: 25,
+            ease: "linear",
+            repeat: Infinity
+          }}
+        >
+          {[...services, ...services].map((service, index) => {
+            const Icon = service.icon;
+            return (
+              <div
+                key={index}
+                className="
+                  flex items-center gap-3 whitespace-nowrap
+                  text-lg font-semibold
+                  bg-gradient-to-r from-white via-sky-300 to-sky-500
+                  bg-clip-text text-transparent
+                "
+              >
+                <Icon className="w-6 h-6 text-sky-400" />
+                <span>{service.label}</span>
+              </div>
+            );
+          })}
+        </motion.div>
+      </div>
+       <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-b from-transparent to-white pointer-events-none" />
+
     </section>
   );
 };

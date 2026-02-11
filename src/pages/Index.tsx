@@ -4,8 +4,10 @@ import Services from "@/components/Services";
 import StudentSection from "@/components/StudentSection";
 import PickupDelivery from "@/components/PickupDelivery";
 import Contact from "@/components/Contact";
+import Testimonials from "@/components/Testimonials"; 
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
+
 
 const Index = () => {
   return (
@@ -17,6 +19,7 @@ const Index = () => {
         <StudentSection />
         <PickupDelivery />
         <Contact />
+        <Testimonials />
       </main>
       <Footer />
       <FloatingCTA />

@@ -1,102 +1,139 @@
-import { MessageCircle, Package, Truck, CheckCircle, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { motion, cubicBezier } from "framer-motion";
+import {
+  PhoneCall,
+  Truck,
+  Sparkles,
+  PackageCheck
+} from "lucide-react";
 
-const PickupDelivery = () => {
-  const phoneNumber = "9841871508";
-  const whatsappLink = `https://wa.me/91${phoneNumber}?text=Hi, I want to schedule a pickup`;
+/* ===================== STEPS DATA ===================== */
+const steps = [
+  {
+    id: 1,
+    title: "Book Your Laundry Pickup",
+    desc: "Schedule a pickup in just a few clicks — message us on WhatsApp or give us a quick call.",
+    icon: PhoneCall,
+  },
+  {
+    id: 2,
+    title: "Pickup by TT Dry Cleaning",
+    desc: "Our delivery executive collects your laundry from your doorstep quickly and safely.",
+    icon: Truck,
+  },
+  {
+    id: 3,
+    title: "Expert Cleaning Process",
+    desc: "Your clothes are washed, dried, ironed, and folded using professional techniques.",
+    icon: Sparkles,
+  },
+  {
+    id: 4,
+    title: "Fast & Fresh Delivery",
+    desc: "Fresh, clean, and neatly packed clothes are delivered back to your home on time.",
+    icon: PackageCheck,
+  },
+];
 
-  const steps = [
-    {
-      number: "1",
-      icon: MessageCircle,
-      title: "Message Us",
-      description: "Send a WhatsApp message or call us to schedule your pickup",
+/* ===================== ANIMATIONS ===================== */
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.3,
     },
-    {
-      number: "2",
-      icon: Package,
-      title: "We Collect",
-      description: "Our delivery person picks up your clothes from your doorstep",
-    },
-    {
-      number: "3",
-      icon: CheckCircle,
-      title: "We Clean",
-      description: "Your clothes are professionally cleaned with care",
-    },
-    {
-      number: "4",
-      icon: Truck,
-      title: "We Deliver",
-      description: "Fresh, clean clothes delivered back to you within 24-48 hours",
-    },
-  ];
+  },
+};
 
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: cubicBezier(0.25, 0.46, 0.45, 0.94) },
+  },
+};
+
+/* ===================== COMPONENT ===================== */
+const PickupDelivery: React.FC = () => {
   return (
-    <section id="pickup" className="section-padding bg-background">
-      <div className="container-custom">
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="inline-block text-primary font-semibold text-sm uppercase tracking-wider mb-4">
+    <section className="bg-slate-50 py-20">
+      <div className="max-w-7xl mx-auto px-6">
+
+        {/* ===================== HEADING ===================== */}
+        <div className="mb-14">
+          <p className="text-sky-500 font-medium uppercase tracking-wide">
             How It Works
-          </span>
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
-            Free Pickup & Delivery
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold mt-2 leading-tight">
+            How <span className="text-sky-500">TT Dry Cleaning</span> <br />
+            Simplifies Your Laundry Experience
           </h2>
-          <p className="text-muted-foreground text-lg">
-            We make laundry effortless. Just message us on WhatsApp and we'll handle everything.
+          <p className="text-gray-600 mt-4 max-w-2xl">
+            From pickup to delivery, we handle your laundry with care so you can
+            relax and enjoy fresh clothes every time.
           </p>
         </div>
 
-        {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-4 mb-12">
-          {steps.map((step, index) => (
-            <div key={index} className="relative">
-              <div className="bg-card rounded-2xl p-6 shadow-card border border-border/50 h-full">
-                {/* Step Number */}
-                <div className="w-10 h-10 rounded-full hero-gradient flex items-center justify-center mb-4">
-                  <span className="text-white font-bold">{step.number}</span>
-                </div>
+        {/* ===================== CONTENT ===================== */}
+        <div className="grid lg:grid-cols-2 gap-14 items-center">
 
-                {/* Icon */}
-                <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">
-                  <step.icon className="w-6 h-6" />
-                </div>
+          {/* ---------- LEFT SIDE : VIDEO ---------- */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="rounded-2xl overflow-hidden shadow-lg bg-white"
+          >
+            <video
+              src="/pickup-delivery.mp4"   
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              poster="/pickup-process.jpg" 
+              className="w-full h-full object-cover"
+            >
+              Your browser does not support the video tag.
+            </video>
+          </motion.div>
 
-                {/* Content */}
-                <h3 className="text-lg font-display font-bold text-foreground mb-2">
-                  {step.title}
-                </h3>
-                <p className="text-muted-foreground text-sm">
-                  {step.description}
-                </p>
-              </div>
+          {/* ---------- RIGHT SIDE : STEPS ---------- */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="space-y-8"
+          >
+            {steps.map((step) => {
+              const Icon = step.icon;
+              return (
+                <motion.div
+                  key={step.id}
+                  variants={itemVariants}
+                  className="flex items-start gap-5"
+                >
+                  {/* ICON */}
+                  <div className="w-14 h-14 rounded-full bg-yellow-400 flex items-center justify-center shrink-0">
+                    <Icon className="w-7 h-7 text-white" />
+                  </div>
 
-              {/* Arrow (hidden on last item and mobile) */}
-              {index < steps.length - 1 && (
-                <div className="hidden lg:flex absolute top-1/2 -right-2 transform -translate-y-1/2 z-10">
-                  <ArrowRight className="w-4 h-4 text-muted-foreground" />
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+                  {/* TEXT */}
+                  <div>
+                    <h3 className="text-xl font-semibold text-slate-900">
+                      {step.title}
+                    </h3>
+                    <p className="text-gray-600 mt-1 max-w-md">
+                      {step.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
 
-        {/* Service Area Info */}
-        <div className="bg-secondary/50 rounded-2xl p-8 md:p-10 text-center">
-          <h3 className="text-xl font-display font-bold text-foreground mb-3">
-            Service Area: 3-5 km from Porur
-          </h3>
-          <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
-            We serve SRM Ramapuram campus, Porur, Valasaravakkam, Ramapuram, and surrounding areas. 
-            Free pickup and delivery for all orders!
-          </p>
-          <Button variant="whatsapp" size="lg" asChild>
-            <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-              <MessageCircle className="w-5 h-5" />
-              Schedule Pickup on WhatsApp
-            </a>
-          </Button>
         </div>
       </div>
     </section>

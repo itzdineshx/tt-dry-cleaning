@@ -1,129 +1,161 @@
-import { Phone, MessageCircle, MapPin, Clock, Mail } from "lucide-react";
+import { motion } from "framer-motion";
+import { PhoneCall, MessageCircle, MapPin, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+/* Yellow Icon Component */
+const IconCircle = ({ icon: Icon }: { icon: any }) => {
+  return (
+    <div className="w-14 h-14 rounded-full bg-yellow-400 flex items-center justify-center flex-shrink-0">
+      <Icon className="w-7 h-7 text-white" />
+    </div>
+  );
+};
 
 const Contact = () => {
   const phoneNumber = "9841871508";
-  const whatsappLink = `https://wa.me/91${phoneNumber}?text=Hi, I'm interested in your laundry services`;
-
-  const contactInfo = [
-    {
-      icon: Phone,
-      label: "Phone",
-      value: "+91 98418 71508",
-      link: `tel:+91${phoneNumber}`,
-    },
-    {
-      icon: MessageCircle,
-      label: "WhatsApp",
-      value: "+91 98418 71508",
-      link: whatsappLink,
-    },
-    {
-      icon: MapPin,
-      label: "Location",
-      value: "Near SRM Ramapuram, Porur, Chennai",
-      link: "https://maps.google.com/?q=SRM+Ramapuram+Porur+Chennai",
-    },
-    {
-      icon: Clock,
-      label: "Working Hours",
-      value: "8:00 AM - 9:00 PM (All Days)",
-      link: null,
-    },
-  ];
+  const whatsappLink = `https://wa.me/91${phoneNumber}`;
 
   return (
-    <section id="contact" className="section-padding bg-secondary/50">
-      <div className="container-custom">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
-          {/* Contact Info */}
-          <div>
-            <span className="inline-block text-primary font-semibold text-sm uppercase tracking-wider mb-4">
-              Contact Us
-            </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-6">
-              Get In Touch
-            </h2>
-            <p className="text-muted-foreground text-lg mb-8">
-              Ready to get started? Contact us via WhatsApp or phone. 
-              We're here to help with all your laundry needs!
-            </p>
+    <section className="bg-slate-50 py-20 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start">
 
-            {/* Contact Details */}
-            <div className="space-y-4 mb-8">
-              {contactInfo.map((item, index) => (
-                <div key={index} className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
-                    <item.icon className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <div className="text-sm text-muted-foreground">{item.label}</div>
-                    {item.link ? (
-                      <a
-                        href={item.link}
-                        target={item.link.startsWith("http") ? "_blank" : undefined}
-                        rel={item.link.startsWith("http") ? "noopener noreferrer" : undefined}
-                        className="text-foreground font-medium hover:text-primary transition-colors"
-                      >
-                        {item.value}
-                      </a>
-                    ) : (
-                      <div className="text-foreground font-medium">{item.value}</div>
-                    )}
-                  </div>
-                </div>
-              ))}
+        {/* LEFT CONTENT */}
+        <motion.div
+          initial={{ opacity: 0, x: -60 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
+          viewport={{ once: true }}
+        >
+          <motion.p
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            viewport={{ once: true }}
+            className="text-sky-500 font-medium uppercase tracking-wide mb-2"
+          >
+            Contact Us
+          </motion.p>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            viewport={{ once: true }}
+            className="text-4xl md:text-5xl font-bold text-slate-900 mb-6"
+          >
+            Get In Touch
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.35, delay: 0.1 }}
+            viewport={{ once: true }}
+            className="text-lg text-gray-600 max-w-xl mb-12"
+          >
+            Ready to get started? Contact us via WhatsApp or phone.
+            We’re here to help with all your laundry needs.
+          </motion.p>
+
+          {/* Phone – LEFT */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, delay: 0.05 }}
+            viewport={{ once: true }}
+            className="flex gap-6 mb-8"
+          >
+            <IconCircle icon={PhoneCall} />
+            <div>
+              <p className="text-base text-gray-500 mb-1">Phone</p>
+              <p className="text-xl font-semibold text-slate-900">
+                +91 {phoneNumber}
+              </p>
             </div>
+          </motion.div>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Button variant="whatsapp" size="lg" asChild>
-                <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="w-5 h-5" />
-                  WhatsApp Us
-                </a>
-              </Button>
-              <Button variant="outline" size="lg" asChild>
-                <a href={`tel:+91${phoneNumber}`}>
-                  <Phone className="w-5 h-5" />
-                  Call Now
-                </a>
-              </Button>
+          {/* WhatsApp – RIGHT */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+            viewport={{ once: true }}
+            className="flex gap-6 mb-8"
+          >
+            <IconCircle icon={MessageCircle} />
+            <div>
+              <p className="text-base text-gray-500 mb-1">WhatsApp</p>
+              <p className="text-xl font-semibold text-slate-900">
+                +91 {phoneNumber}
+              </p>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Google Map */}
-          <div className="bg-card rounded-2xl overflow-hidden shadow-card border border-border/50">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.2799673785893!2d80.1732!3d13.0272!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5260000000000%3A0x0!2sSRM%20Institute%20of%20Science%20and%20Technology%2C%20Ramapuram!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-              width="100%"
-              height="100%"
-              style={{ border: 0, minHeight: "400px" }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="TT Dry Cleaning Location"
-            />
-          </div>
-        </div>
+          {/* Location – BOTTOM */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.15 }}
+            viewport={{ once: true }}
+            className="flex gap-6 mb-8"
+          >
+            <IconCircle icon={MapPin} />
+            <div>
+              <p className="text-base text-gray-500 mb-1">Location</p>
+              <p className="text-lg font-semibold text-slate-900">
+                Near SRM Ramapuram, Porur, Chennai
+              </p>
+            </div>
+          </motion.div>
 
-        {/* Trust Footer */}
-        <div className="mt-16 text-center">
-          <div className="inline-flex flex-wrap justify-center gap-6 text-muted-foreground text-sm">
-            <span className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-accent" />
-              Trusted by 500+ Customers
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-primary" />
-              Serving Since 2015
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-accent" />
-              100% Satisfaction Guaranteed
-            </span>
-          </div>
-        </div>
+          {/* Working Hours – SCALE */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="flex gap-6 mb-12"
+          >
+            <IconCircle icon={Clock} />
+            <div>
+              <p className="text-base text-gray-500 mb-1">Working Hours</p>
+              <p className="text-lg font-semibold text-slate-900">
+                8:00 AM – 9:00 PM (All Days)
+              </p>
+            </div>
+          </motion.div>
+
+          {/* CTA BUTTONS – UP */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: 0.25 }}
+            viewport={{ once: true }}
+            className="flex gap-4"
+          >
+            <Button
+              className="bg-green-500 hover:bg-green-600 text-white text-lg px-6 py-6"
+              asChild
+            >
+              <a href={whatsappLink} target="_blank">
+                <MessageCircle className="w-5 h-5 mr-2" />
+                WhatsApp Us
+              </a>
+            </Button>
+
+            <Button
+              variant="outline"
+              className="border-blue-600 text-blue-600 hover:bg-blue-50 text-lg px-6 py-6"
+              asChild
+            >
+              <a href={`tel:+91${phoneNumber}`}>
+                <PhoneCall className="w-5 h-5 mr-2" />
+                Call Now
+              </a>
+            </Button>
+          </motion.div>
+        </motion.div>
+
       </div>
     </section>
   );
