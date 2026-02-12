@@ -32,7 +32,7 @@ const Header = () => {
           <a href="#" className="flex items-center gap-2">
             <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
               <img
-                src="/public/logo.png"
+                src="/logo.png"
                 alt="TT Dry Cleaning"
                 className="w-full h-full object-contain scale-110"
               />
