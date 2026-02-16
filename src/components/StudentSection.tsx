@@ -161,8 +161,8 @@ const StudentSection = () => {
                     <div className="text-xs text-gray-500">Students</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold">24hr</div>
-                    <div className="text-xs text-gray-500">Delivery</div>
+                    <div className="text-2xl font-bold">on-Time</div>
+                    <div className="text-xs text-gray-500">Service</div>
                   </div>
                   <div>
                     <div className="text-2xl font-bold">Free</div>

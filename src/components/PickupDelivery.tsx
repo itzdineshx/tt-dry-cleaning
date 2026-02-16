@@ -28,8 +28,8 @@ const steps = [
   },
   {
     id: 4,
-    title: "Fast & Fresh Delivery",
-    desc: "Fresh, clean, and neatly packed clothes are delivered back to your home on time.",
+    title: "Premium Feel",
+    desc: "We ensure every garment is cleaned, pressed, and handled with professional care",
     icon: PackageCheck,
   },
 ];
