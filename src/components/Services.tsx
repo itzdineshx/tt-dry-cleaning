@@ -1,5 +1,5 @@
 import { Shirt, Sparkles, Wind, Scissors } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, easeOut } from "framer-motion";
 import type { FC } from "react";
 
 import laundryImg from "../assets/laundry.jpg";
@@ -34,7 +34,7 @@ const cardVariants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: "easeOut",
+      ease: easeOut,
     },
   },
 };
@@ -47,6 +47,11 @@ const Services: FC = () => {
       icon: Shirt,
     },
     {
+      title: "Stain Cleaning",
+      image: stainImg,
+      icon: Scissors,
+    },
+    {
       title: "Dry Cleaning",
       image: dryCleanImg,
       icon: Sparkles,
@@ -55,11 +60,6 @@ const Services: FC = () => {
       title: "Ironing Service",
       image: ironingImg,
       icon: Wind,
-    },
-    {
-      title: "Stain Cleaning",
-      image: stainImg,
-      icon: Scissors,
     },
   ];
 
