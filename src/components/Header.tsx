@@ -5,16 +5,23 @@ import {
   GraduationCap,
   Truck,
   PhoneCall,
-  Calendar,
+  IndianRupee,
+  LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+type NavLink = {
+  href: string;
+  label: string;
+  icon: LucideIcon;
+};
 
-  const navLinks = [
+const Header: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
+  const navLinks: NavLink[] = [
     { href: "#services", label: "Services", icon: Shirt },
     { href: "#students", label: "For Students", icon: GraduationCap },
     { href: "#pickup", label: "Pickup & Delivery", icon: Truck },
@@ -49,36 +56,37 @@ const Header = () => {
 
           {/* DESKTOP NAV */}
           <nav className="hidden lg:flex items-center gap-10">
-            {navLinks.map((link) => {
-              const Icon = link.icon;
-              return (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="flex items-center gap-2 text-foreground/80 hover:text-sky-600 font-medium"
-                >
-                  <Icon className="w-4 h-4 text-sky-600/80" />
-                  {link.label}
-                </a>
-              );
-            })}
+            {navLinks.map(({ href, label, icon: Icon }) => (
+              <a
+                key={href}
+                href={href}
+                className="flex items-center gap-2 text-foreground/80 hover:text-sky-600 font-medium"
+              >
+                <Icon className="w-4 h-4 text-sky-600/80" />
+                {label}
+              </a>
+            ))}
           </nav>
 
           {/* RIGHT SIDE */}
           <div className="flex items-center gap-3">
 
-            {/* DESKTOP BOOK NOW */}
-            <Button asChild className="hidden sm:flex bg-sky-600 hover:bg-sky-700">
-              <Link to="/book-now">
-                <Calendar className="w-4 h-4 mr-2" />
-                Book Now
+            {/* DESKTOP PRICE LIST */}
+            <Button
+              asChild
+              className="hidden sm:flex bg-sky-600 hover:bg-sky-700"
+            >
+              <Link to="/price-list">
+                <IndianRupee className="w-4 h-4 mr-2" />
+                Price List
               </Link>
             </Button>
 
             {/* MOBILE MENU TOGGLE */}
             <button
               className="lg:hidden p-2"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              onClick={() => setIsMenuOpen((prev) => !prev)}
+              aria-label="Toggle menu"
             >
               {isMenuOpen ? <X /> : <Menu />}
             </button>
@@ -90,29 +98,26 @@ const Header = () => {
           <nav className="lg:hidden py-4 border-t">
             <div className="flex flex-col gap-1">
 
-              {navLinks.map((link) => {
-                const Icon = link.icon;
-                return (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    className="px-4 py-3 flex items-center gap-3 hover:bg-secondary rounded-lg"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <Icon className="w-5 h-5 text-sky-600" />
-                    {link.label}
-                  </a>
-                );
-              })}
+              {navLinks.map(({ href, label, icon: Icon }) => (
+                <a
+                  key={href}
+                  href={href}
+                  className="px-4 py-3 flex items-center gap-3 hover:bg-secondary rounded-lg"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <Icon className="w-5 h-5 text-sky-600" />
+                  {label}
+                </a>
+              ))}
 
-              {/* MOBILE BOOK NOW */}
+              {/* MOBILE PRICE LIST */}
               <Link
-                to="/book-now"
+                to="/price-list"
                 onClick={() => setIsMenuOpen(false)}
                 className="mt-2 mx-4 py-3 flex items-center justify-center gap-2 bg-sky-600 text-white rounded-lg font-semibold"
               >
-                <Calendar className="w-5 h-5" />
-                Book Now
+                <IndianRupee className="w-5 h-5" />
+                Price List
               </Link>
             </div>
           </nav>
