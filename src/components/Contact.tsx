@@ -27,10 +27,9 @@ const contactSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
-/* ---------------- ICON CIRCLE ---------------- */
 const IconCircle = ({ icon: Icon }: { icon: any }) => (
-  <div className="w-14 h-14 rounded-full bg-yellow-400 flex items-center justify-center">
-    <Icon className="w-7 h-7 text-white" />
+  <div className="w-14 h-14 rounded-full bg-yellow-400 flex items-center justify-center shadow-md">
+    <Icon className="w-6 h-6 text-white" />
   </div>
 );
 
@@ -44,7 +43,6 @@ export default function Contact() {
     resolver: zodResolver(contactSchema),
   });
 
-  /* ---------------- EMAIL SEND ---------------- */
   const onSubmit = async (data: ContactFormData) => {
     setLoading(true);
 
@@ -52,19 +50,13 @@ export default function Contact() {
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          name: data.name,
-          phone: data.phone,
-          email: data.email,
-          message: data.message,
-        },
+        data,
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
 
       setSent(true);
       form.reset();
     } catch (error) {
-      console.error("EmailJS Error:", error);
       alert("Failed to send message");
     } finally {
       setLoading(false);
@@ -72,82 +64,153 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="bg-slate-50 py-20">
-      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16">
+    <section id="contact" className="bg-slate-100 py-24">
+      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20">
 
-        {/* LEFT */}
-        <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-          <h2 className="text-4xl font-bold mb-6">Get In Touch</h2>
+        {/* LEFT SIDE */}
+        <motion.div
+          initial={{ opacity: 0, x: -40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+        >
+          <p className="text-sky-500 font-semibold tracking-wide uppercase">
+            Contact Us
+          </p>
 
-          <div className="space-y-6">
-            <div className="flex gap-4">
+          <h2 className="text-5xl font-bold mt-2 mb-6">
+            Get In Touch
+          </h2>
+
+          <p className="text-gray-600 mb-10 max-w-md">
+            Ready to get started? Contact us via WhatsApp or phone.
+            We’re here to help with all your laundry needs.
+          </p>
+
+          <div className="space-y-8">
+
+            <div className="flex items-start gap-5">
               <IconCircle icon={PhoneCall} />
-              <p className="text-xl font-semibold">+91 {phoneNumber}</p>
+              <div>
+                <p className="text-gray-500">Phone</p>
+                <p className="text-lg font-semibold">
+                  +91 {phoneNumber}
+                </p>
+              </div>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex items-start gap-5">
               <IconCircle icon={MessageCircle} />
-              <p className="text-xl font-semibold">WhatsApp</p>
+              <div>
+                <p className="text-gray-500">WhatsApp</p>
+                <p className="text-lg font-semibold">
+                  +91 {phoneNumber}
+                </p>
+              </div>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex items-start gap-5">
               <IconCircle icon={MapPin} />
-              <p>Near SRM Ramapuram, Porur, Chennai</p>
+              <div>
+                <p className="text-gray-500">Location</p>
+                <p className="font-medium">
+                  Near SRM Ramapuram, Porur, Chennai
+                </p>
+              </div>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex items-start gap-5">
               <IconCircle icon={Clock} />
-              <p>8:00 AM – 9:00 PM</p>
+              <div>
+                <p className="text-gray-500">Working Hours</p>
+                <p className="font-medium">
+                  8:00 AM – 9:00 PM (All Days)
+                </p>
+              </div>
             </div>
           </div>
-
-          <Button asChild className="mt-8 bg-green-500">
-            <a href={whatsappLink} target="_blank">
-              WhatsApp Us
-            </a>
-          </Button>
         </motion.div>
 
-        {/* RIGHT */}
-        <motion.div initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-          className="bg-white p-10 rounded-2xl shadow-lg">
+        {/* RIGHT SIDE FORM */}
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          className="bg-white p-12 rounded-3xl shadow-xl"
+        >
+          <h3 className="text-2xl font-bold mb-2">
+            Send us a Message
+          </h3>
+          <p className="text-gray-500 mb-8">
+            Have questions about our services? We'd love to hear from you!
+          </p>
 
           {sent ? (
-            <div className="text-center">
+            <div className="text-center py-10">
               <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
               <h3 className="text-2xl font-bold">Message Sent!</h3>
-              <Button className="mt-4" onClick={() => setSent(false)}>
+              <Button
+                className="mt-6 bg-sky-500"
+                onClick={() => setSent(false)}
+              >
                 Send Another
               </Button>
             </div>
           ) : (
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-              <div>
-                <Label>Name</Label>
-                <Input {...form.register("name")} />
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-6"
+            >
+              <div className="grid grid-cols-2 gap-5">
+                <div>
+                  <Label>Full Name *</Label>
+                  <Input
+                    placeholder="Your full name"
+                    {...form.register("name")}
+                  />
+                </div>
+
+                <div>
+                  <Label>Phone Number *</Label>
+                  <Input
+                    placeholder="Your phone number"
+                    {...form.register("phone")}
+                  />
+                </div>
               </div>
 
               <div>
-                <Label>Phone</Label>
-                <Input {...form.register("phone")} />
+                <Label>Email Address *</Label>
+                <Input
+                  placeholder="your.email@example.com"
+                  {...form.register("email")}
+                />
               </div>
 
               <div>
-                <Label>Email</Label>
-                <Input {...form.register("email")} />
+                <Label>Message *</Label>
+                <Textarea
+                  rows={5}
+                  placeholder="Tell us about your laundry needs..."
+                  {...form.register("message")}
+                />
               </div>
 
-              <div>
-                <Label>Message</Label>
-                <Textarea {...form.register("message")} rows={4} />
-              </div>
-
-              <Button type="submit" disabled={loading} className="w-full bg-sky-500">
-                {loading ? "Sending..." : <><Send className="mr-2" /> Send Message</>}
+              <Button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-sky-500 hover:bg-sky-600 text-white py-6 text-lg rounded-xl"
+              >
+                {loading ? "Sending..." : (
+                  <>
+                    <Send className="mr-2 w-5 h-5" />
+                    Send Message
+                  </>
+                )}
               </Button>
             </form>
           )}
         </motion.div>
+
       </div>
     </section>
   );
