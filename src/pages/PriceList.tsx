@@ -13,7 +13,17 @@ const priceList: PriceItem[] = [
   { service: "Shoe Cleaning", price: "₹300 / pair" },
 ];
 
+import { useSeo } from "@/lib/seo";
+
 const PriceList: React.FC = () => {
+  useSeo({
+    title: "TT Dry Cleaning | Price List",
+    description: "View our up-to-date price list for wash & iron, dry cleaning, steam ironing and more.",
+    url: "https://ttdrycleaning.com/price-list",
+    image: "https://ttdrycleaning.com/hero.png",
+    type: "article",
+  });
+
   return (
     <section className="min-h-screen bg-slate-50 py-20">
       <div className="max-w-4xl mx-auto px-6">

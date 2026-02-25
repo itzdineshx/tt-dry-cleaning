@@ -9,7 +9,16 @@ import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
 
 
+import { useSeo } from "@/lib/seo";
+
 const Index = () => {
+  useSeo({
+    title: "TT Dry Cleaning | Home",
+    description: "Professional laundry & dry cleaning service near SRM Ramapuram and Porur, Chennai. Fast, affordable, student-friendly.",
+    url: "https://ttdrycleaning.com/",
+    image: "https://ttdrycleaning.com/hero.png",
+  });
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
