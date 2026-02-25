@@ -9,9 +9,11 @@ import {
   LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
+import { useState, useRef, useLayoutEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 type NavLink = {
   href: string;
@@ -22,15 +24,50 @@ type NavLink = {
 const Header: React.FC = () => {
   const MotionNavLink = motion(NavLink);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const headerRef = useRef<HTMLElement>(null);
 
-  // toggle shadow/background when user scrolls
-  useEffect(() => {
-    const onScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+  // GSAP ScrollTrigger setup for header animations
+  useLayoutEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const headerEl = headerRef.current;
+    if (!headerEl) return;
+
+    const ctx = gsap.context(() => {
+      // timeline for background/height
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: headerEl,
+          start: "top top",
+          end: "+=200",
+          scrub: 0.3,
+        },
+      });
+
+      tl.to(headerEl, {
+        backdropFilter: "blur(20px)",
+        backgroundColor: "rgba(255,255,255,0.95)",
+        height: "4rem",
+        ease: "none",
+      });
+
+      // hide/show header based on scroll direction
+      ScrollTrigger.create({
+        start: "top top",
+        end: "bottom bottom",
+        onUpdate: (self) => {
+          if (self.direction === -1) {
+            gsap.to(headerEl, { y: 0, duration: 0.3, ease: "power2.out" });
+          } else {
+            gsap.to(headerEl, { y: -headerEl.offsetHeight, duration: 0.3, ease: "power2.out" });
+          }
+        },
+      });
+    }, headerRef);
+
+    return () => {
+      ctx.revert();
+      ScrollTrigger.kill();
     };
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const navLinks: NavLink[] = [
@@ -62,9 +99,8 @@ const Header: React.FC = () => {
 
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-md transition-shadow duration-300 ${
-        isScrolled ? "shadow-lg" : "shadow-soft"
-      }`}
+      ref={headerRef}
+      className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-md transition-shadow duration-300 shadow-soft"
       initial={{ y: -50, opacity: 0 }}
       animate={{ y: 0, opacity: 1, transition: { type: "spring", stiffness: 120 } }}
     >
