@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState, useRef, useLayoutEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants, Transition } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -66,7 +66,8 @@ const Header: React.FC = () => {
 
     return () => {
       ctx.revert();
-      ScrollTrigger.kill();
+      // kill any remaining ScrollTrigger instances since there's no static `kill` method
+      ScrollTrigger.getAll().forEach((st) => st.kill());
     };
   }, []);
 
@@ -77,24 +78,37 @@ const Header: React.FC = () => {
     { href: "#contact", label: "Contact", icon: PhoneCall },
   ];
 
-  const logoVariants = {
+  // animation variants typed for framer-motion
+  const logoVariants: Variants = {
     hidden: { opacity: 0, scale: 0.8 },
-    visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 300, damping: 20 } },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { type: "spring" as const, stiffness: 300, damping: 20 } as Transition,
+    },
   };
 
-  const navItemVariants = {
+  const navItemVariants: Variants = {
     hidden: { opacity: 0, y: -10 },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: i * 0.05 },
+      transition: { delay: i * 0.05 } as Transition,
     }),
   };
 
-  const mobileMenuVariants = {
+  const mobileMenuVariants: Variants = {
     hidden: { opacity: 0, height: 0 },
-    visible: { opacity: 1, height: "auto", transition: { ease: "easeOut" } },
-    exit: { opacity: 0, height: 0, transition: { ease: "easeIn" } },
+    visible: {
+      opacity: 1,
+      height: "auto",
+      transition: { ease: "easeOut" as any },
+    } as any,
+    exit: {
+      opacity: 0,
+      height: 0,
+      transition: { ease: "easeIn" as any },
+    } as any,
   };
 
   return (
